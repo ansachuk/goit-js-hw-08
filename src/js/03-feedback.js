@@ -6,7 +6,7 @@ const FORM_DATA_LOCAL_KEY = '"feedback-form-state"';
 const onFormInput = e => {
   const {
     elements: { email, message },
-  } = e.currentTarget;
+  } = feedbackFormRef;
 
   const inputValues = {
     email: email.value,
@@ -14,6 +14,7 @@ const onFormInput = e => {
   };
 
   localStorage.setItem(FORM_DATA_LOCAL_KEY, JSON.stringify(inputValues));
+  console.log(localStorage.getItem(FORM_DATA_LOCAL_KEY));
 };
 
 const onFormSubmit = e => {
@@ -38,6 +39,6 @@ const onPageReset = () => {
 };
 
 onPageReset();
-feedbackFormRef.addEventListener('input', onFormInput);
+feedbackFormRef.addEventListener('input', throttle(onFormInput, 500));
 feedbackFormRef.addEventListener('submit', onFormSubmit);
 //throttle(onFormInput, 1000)
